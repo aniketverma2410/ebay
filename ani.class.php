@@ -1,7 +1,7 @@
 <?php
 //error_reporting(0);
-require_once PATH . "comprehensive_search_crawlers/sunil/ebay/cURL.php";
-require_once PATH . "comprehensive_search_crawlers/sunil/ebay/fetch_data.class.php";
+require_once PATH . "comprehensive_search_crawlers/sunil/colemanfurniture/aniket/cURL.php";
+require_once PATH . "comprehensive_search_crawlers/sunil/colemanfurniture/aniket/fetch_data.class.php";
 
 class ebay extends cURL
 {
@@ -31,8 +31,9 @@ class ebay extends cURL
 		$this->product_main_array = array();
 		$this->url = trim($this->product_url);
 		print "\n+++++++$this->url+++++++++\n";
-		for ($i=1; $i <30;$i++) {
-			$url="https://www.ebay.com/sch/i.html?_from=R40&_nkw=transocean+rugs&_sacat=0&LH_TitleDesc=0&_pgn=$i&rt=nc";
+		for ($i=1; $i <33;$i++) {
+			$url="https://colemanfurniture.com/searchresults.html?q=classic+home&_pgn=$i&rt=nc";
+			// $url="https://www.ebay.com/sch/i.html?_from=R40&_nkw=transocean+rugs&_sacat=0&LH_TitleDesc=0&_pgn=$i&rt=nc";
 
 
 		$this->htmlpage = $this->getPageResponse($url);
@@ -49,7 +50,7 @@ class ebay extends cURL
 	function fetch_data()
 	{
 	   $resultFile=new fetch($this->searchKey);
-	   if(preg_match('/class\=\"srp\-results\s+srp\-list\s+clearfix\"\>(.*)\<script\>/',$this->htmlpage,$index_data)){
+	   if(preg_match('/class\=\"imgContent\"\>(.*)\<script\>/',$this->htmlpage,$index_data)){
 	   	if (preg_match_all('/<li(.*?)<\/li>/',$index_data[1],$product_list)) {	 
 	   		foreach ($product_list[1] as $key => $value) {
 	   			$product_mpn="";
@@ -91,7 +92,7 @@ class ebay extends cURL
 							}else{
 								$name="";
 							}
-							file_put_contents("ebay1.csv", "" . $match_url[1] . ",".$name.",".$product_brand.",".$product_mpn.",".$product_upc."" . PHP_EOL, @FILE_APPEND);
+							file_put_contents("ani1.csv", "" . $match_url[1] . ",".$name.",".$product_brand.",".$product_mpn.",".$product_upc."" . PHP_EOL, @FILE_APPEND);
 							self::data_insert($match_url[1],$name,$product_brand,$product_mpn,$product_upc);
 		   				}
 		   			}
@@ -303,7 +304,8 @@ function data_insert($url,$name,$product_brand,$product_mpn,$product_upc) {
 	
 	function url_creator($searchKey){
 
-		$url="https://www.ebay.com/sch/i.html?_from=R40&_nkw=$searchKey&_sacat=0&_ipg=60";		
+		$url="https://colemanfurniture.com/searchresults.html?q=$searchKey&_sacat=0&_ipg=24";		
+		// $url="https://www.ebay.com/sch/i.html?_from=R40&_nkw=$searchKey&_sacat=0&_ipg=60";		
 		return $url;
 		
 	}

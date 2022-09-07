@@ -2,9 +2,9 @@
 	set_time_limit(0);
 	//error_reporting(0);
 	ini_set("memory_limit","2000M");
-	define('PATH', preg_replace('~comprehensive_search_crawlers/sunil/ebay~', '', dirname(__FILE__)));
-	require_once PATH . "comprehensive_search_crawlers/sunil/ebay/ebay.class.php";
-	require_once PATH. "comprehensive_search_crawlers/sunil/ebay/config/db.php";
+	define('PATH', preg_replace('~comprehensive_search_crawlers/sunil/colemanfurniture/aniket~', '', dirname(__FILE__)));
+	require_once PATH . "comprehensive_search_crawlers/sunil/colemanfurniture/aniket/ani.class.php";
+	require_once PATH. "comprehensive_search_crawlers/sunil/colemanfurniture/aniket/config/db.php";
 
 	###### CREATE OBJECT, USER-ID, CRAWLER-ID ######
 	if(!isset($argv[1])) {
@@ -17,7 +17,7 @@
 	$con=new Connection();
 	$crawler = new ebay($con,$client_id,$crawler_id);
 
-	$crawler->pause_file = PATH."comprehensive_search_crawlers/sunil/ebay/logs/pause_file_{$crawler_id}_{$instance_num}.txt";
+	$crawler->pause_file = PATH."comprehensive_search_crawlers/sunil/colemanfurniture/aniket/logs/pause_file_{$crawler_id}_{$instance_num}.txt";
 	
 	#----------------- Get proxies --------------------#
 	$crawler->proxy_switch = 1;
@@ -40,12 +40,13 @@
 		$crawler->trusted_pwd = $row['password'];
 	}
 
-	$crawler->table_name = "test_sunil_1";
+	// $crawler->table_name = "test_sunil_1";
+	$crawler->table_name = "tbl_ani_1";
 	
 	###############################################################
 
 	$data_array= array();
-	$crawler->delta_file_name = PATH . "comprehensive_search_crawlers/sunil/ebay/files/Raypak.csv";
+	$crawler->delta_file_name = PATH . "comprehensive_search_crawlers/sunil/colemanfurniture/aniket/files/Raypak.csv";
 	$crawler->reading_csv_data();
 	$start_row_count = $instance_num*$end_row;
 	$start_row = $crawler->check_pause_restart($start_row_count);
