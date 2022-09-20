@@ -37,9 +37,12 @@ class ebay extends cURL
 
 
 		$this->htmlpage = $this->getPageResponse($url);
+		echo '1';die;
 		file_put_contents('aaaaaaaaaaaa.html',$this->htmlpage);
+		echo 'ok';die;
 		//die;
-			if ($this->htmlpage!="") {			
+			if ($this->htmlpage!="") {	
+				echo 'ok1';die;		
 				$this->fetch_data();
 			}
 			$this->htmlpage="";
@@ -49,6 +52,7 @@ class ebay extends cURL
 
 	function fetch_data()
 	{
+		echo 'ok2';die;
 	   $resultFile=new fetch($this->searchKey);
 	   if(preg_match('/class\=\"imgContent\"\>(.*)\<script\>/',$this->htmlpage,$index_data)){
 	   	if (preg_match_all('/<li(.*?)<\/li>/',$index_data[1],$product_list)) {	 
@@ -93,7 +97,7 @@ class ebay extends cURL
 								$name="";
 							}
 							file_put_contents("ani1.csv", "" . $match_url[1] . ",".$name.",".$product_brand.",".$product_mpn.",".$product_upc."" . PHP_EOL, @FILE_APPEND);
-							self::data_insert($match_url[1],$name,$product_brand,$product_mpn,$product_upc);
+							//self::data_insert($match_url[1],$name,$product_brand,$product_mpn,$product_upc);
 		   				}
 		   			}
 	   			}
@@ -153,7 +157,7 @@ function data_insert($url,$name,$product_brand,$product_mpn,$product_upc) {
 		else{
 			$this->configProxy(1);
 		}
-		$fileName="sunil.html";
+		$fileName="ani.html";
 		$this->user_agent = $this->setBrowser();
 
 			print "responce cmd ===================\n\n";
